@@ -4,18 +4,18 @@ Do{ Do {
  } while($entrycpf.Length -lt 11 -or ($entrycpf -gt 11 -and ($entrycpf -notmatch "." -and $entrycpf -notmatch "-")))
 $CPF =  $entrycpf.Replace(".","").Replace("-","").Replace(" ","").Trim(" ")
 $CPF_UMASK = $CPF.SubString(0,3)+$CPF.SubString(3,3)+$CPF.SubString(6,3)+$CPF.SubString(9,2)
-$array = New-Object System.Collections.Generic.List[System.Object]
+$array_cpf = New-Object System.Collections.Generic.List[System.Object]
 foreach($number in ($CPF_UMASK.ToCharArray())){
-        $array.add([int]::parse($number))
+        $array_cpf.add([int]::parse($number))
 }
 $digit1 = 0
 $digit2 = 0
 $x = 0
 $dv = 10
-$CPFLast = $array[($CPF_UMASK.length-1)]
-$CPFPenum = $array[($CPF_UMASK.length-2)]
+$CPFLast = $array_cpf[($CPF_UMASK.length-1)]
+$CPFPenum = $array_cpf[($CPF_UMASK.length-2)]
 while($x -lt ($CPF_UMASK.length-2)){
-    $calc = $array[$x]*$dv
+    $calc = $array_cpf[$x]*$dv
     [int]$digit1 = $digit1+$calc
     $x = $x+1
     $dv = $dv-1
@@ -31,7 +31,7 @@ $x = 1
 $dv = 10
 
 while($x -lt ($CPF_UMASK.length-2)){
-    $calc = $array[$x]*$dv
+    $calc = $array_cpf[$x]*$dv
     [int]$digit2 = $digit2+$calc
     $x = $x+1
     $dv = $dv-1
